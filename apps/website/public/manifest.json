@@ -1,0 +1,15 @@
+{
+  "short_name": "ACSPIRE",
+  "name": "ACSPIRE Digital Growth & Academy",
+  "icons": [
+    {
+      "src": "/favicon.jpg",
+      "type": "image/jpeg",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#030712",
+  "theme_color": "#030712",
+  "display": "standalone"
+}

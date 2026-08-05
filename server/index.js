@@ -1,77 +1,96 @@
 import 'dotenv/config'
 import express from 'express'
+import helmet from 'helmet'
 import cors from 'cors'
-import multer from 'multer'
+import compression from 'compression'
+import morgan from 'morgan'
 import path from 'path'
 import fs from 'fs'
 import { fileURLToPath } from 'url'
 
-import authRoutes from './routes/auth.js'
-import contactRoutes from './routes/contacts.js'
-import jobRoutes from './routes/jobs.js'
-import jobApplicationRoutes from './routes/job-applications.js'
-import serviceRoutes from './routes/services.js'
-import blogRoutes from './routes/blogs.js'
-import courseRoutes from './routes/courses.js'
+import apiRoutes from './routes/index.js'
+import { apiLimiter } from './middleware/rateLimiter.js'
+import { logger, morganStream } from './utils/logger.js'
+import { initDatabase } from './config/database.js'
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const uploadsDir = path.join(__dirname, '..', 'public', 'uploads')
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+const uploadsDir = path.join(__dirname, 'uploads')
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true })
 }
 
-const storage = multer.diskStorage({
-  destination: (_req, _file, cb) => cb(null, uploadsDir),
-  filename: (_req, file, cb) => {
-    const ext = path.extname(file.originalname) || '.jpg'
-    const name = `${Date.now()}-${Math.round(Math.random() * 1e9)}${ext}`
-    cb(null, name)
-  },
-})
-
-const upload = multer({
-  storage,
-  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
-  fileFilter: (_req, file, cb) => {
-    if (file.mimetype.startsWith('image/')) cb(null, true)
-    else cb(new Error('Only images allowed'))
-  },
-})
-
 const app = express()
 const PORT = process.env.PORT || 3001
 
-// ── Middleware ─────────────────────────────────────────────────────────────────
-app.use(cors({
-  origin: '*',
-  credentials: true,
-}))
-app.use(express.json({ limit: '10mb' }))
+// ── 1. Security Headers ────────────────────────────────────────────────────────
+app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }))
 
-// Serve uploaded images statically
+// ── 2. Disable X-Powered-By ───────────────────────────────────────────────────
+app.disable('x-powered-by')
+
+// ── 3. CORS configuration from ALLOWED_ORIGINS ────────────────────────────────
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(',').map((o) => o.trim())
+  : ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:5175',
+     'http://localhost:5176', 'http://localhost:5177', 'http://localhost:3000',
+     'https://acspire.in', 'https://www.acspire.in']
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true)
+      }
+      return callback(null, true) // Local development fallback
+    },
+    credentials: true,
+  })
+)
+
+// ── 4. Compression & Morgan Logging ──────────────────────────────────────────
+app.use(compression())
+app.use(morgan('combined', { stream: morganStream }))
+app.use('/api/', apiLimiter)
+
+// ── 5. Body Parsers ───────────────────────────────────────────────────────────
+app.use(express.json({ limit: '10mb' }))
+app.use(express.urlencoded({ extended: true, limit: '10mb' }))
+
+// Static fallback for local uploads
 app.use('/uploads', express.static(uploadsDir))
 
-// ── Image Upload Route ─────────────────────────────────────────────────────────
-app.post('/api/upload', upload.single('image'), (req, res) => {
-  if (!req.file) return res.status(400).json({ error: 'No image file provided' })
-  const hostUrl = process.env.SERVER_URL || `${req.protocol}://${req.get('host')}`
-  const url = `${hostUrl}/uploads/${req.file.filename}`
-  res.json({ url, filename: req.file.filename })
+// ── 6. Centralized API Routes ─────────────────────────────────────────────────
+app.use('/api', apiRoutes)
+
+// ── 7. Health Check Route ─────────────────────────────────────────────────────
+app.get('/api/health', (_req, res) => {
+  res.json({
+    status: 'ok',
+    environment: process.env.NODE_ENV || 'development',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+  })
 })
 
-// ── Routes ────────────────────────────────────────────────────────────────────
-app.use('/api/auth', authRoutes)
-app.use('/api/contacts', contactRoutes)
-app.use('/api/jobs', jobRoutes)
-app.use('/api/job-applications', jobApplicationRoutes)
-app.use('/api/services', serviceRoutes)
-app.use('/api/blogs', blogRoutes)
-app.use('/api/courses', courseRoutes)
-
-// ── Health check ──────────────────────────────────────────────────────────────
-app.get('/api/health', (_req, res) => res.json({ status: 'ok', time: new Date().toISOString() }))
-
-// ── Start server ──────────────────────────────────────────────────────────────
-app.listen(PORT, () => {
-  console.log(`\n  ✅  ACSPIRE API running at http://localhost:${PORT}\n`)
+// ── 8. 404 Route Handler ──────────────────────────────────────────────────────
+app.use((req, res) => {
+  res.status(404).json({ message: 'Route not found' })
 })
+
+// ── 9. Global 500 Error Handler ────────────────────────────────────────────────
+app.use((err, req, res, next) => {
+  console.error(err)
+  logger.error(err.message, { stack: err.stack })
+  res.status(500).json({ error: 'Internal Server Error' })
+})
+
+// ── Initialize Neon Database & Start Server ──────────────────────────────────
+initDatabase().then(() => {
+  app.listen(PORT, () => {
+    logger.info(`✅ ACSPIRE API running at http://localhost:${PORT}`)
+    console.log(`\n  🚀  ACSPIRE Production API server live on port ${PORT}\n`)
+  })
+})
+
+export default app

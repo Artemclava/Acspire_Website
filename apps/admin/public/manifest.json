@@ -1,0 +1,15 @@
+{
+  "short_name": "ACSPIRE Admin",
+  "name": "ACSPIRE Admin Control Portal",
+  "icons": [
+    {
+      "src": "/favicon.jpg",
+      "type": "image/jpeg",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "display": "standalone"
+}
