@@ -1,23 +1,42 @@
 {
-  "name": "acspire-monorepo",
+  "name": "acspire-website",
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "workspaces": [
-    "apps/*",
-    "server"
-  ],
   "scripts": {
-    "dev:website": "npm --prefix apps/website run dev",
-    "dev:admin": "npm --prefix apps/admin run dev",
-    "dev:server": "npm --prefix server run start",
-    "dev:all": "concurrently \"npm run dev:website\" \"npm run dev:admin\" \"npm run dev:server\"",
-    "build:website": "npm --prefix apps/website run build",
-    "build:admin": "npm --prefix apps/admin run build",
-    "build:all": "npm run build:website && npm run build:admin",
-    "start:server": "npm --prefix server run start"
+  "dev": "vite --host 0.0.0.0",
+  "build": "vite build",
+  "preview": "vite preview",
+  "server": "node server/index.js",
+  "start": "node server/index.js",
+  "dev:all": "concurrently \"npm run dev\" \"npm run server\""
+},
+  "dependencies": {
+    "@fontsource/plus-jakarta-sans": "^5.3.0",
+    "@fontsource/sora": "^5.3.0",
+    "better-sqlite3": "^13.0.2",
+    "concurrently": "^10.0.4",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "firebase": "^12.16.0",
+    "jsonwebtoken": "^9.0.3",
+    "lucide-react": "^1.26.0",
+    "multer": "^2.2.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-icons": "^5.7.0",
+    "react-router-dom": "^7.18.1"
   },
   "devDependencies": {
-    "concurrently": "^10.0.4"
+    "@tailwindcss/vite": "^4.0.0",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^6.0.0",
+    "oxfmt": "^0.2.0",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.7.0",
+    "vite": "^8.0.0"
   }
 }
