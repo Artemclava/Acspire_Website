@@ -136,7 +136,7 @@ function ApplyModal({ job, onClose }) {
                 <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Full Name *</label>
                 <div className="relative">
                   <User size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
-                  <input type="text" required value={form.name} onChange={update('name')} placeholder="e.g. Gia Balan" className={inputCls} />
+                  <input type="text" required value={form.name} onChange={update('name')} className={inputCls} />
                 </div>
               </div>
 
@@ -145,7 +145,7 @@ function ApplyModal({ job, onClose }) {
                   <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Email Address *</label>
                   <div className="relative">
                     <Mail size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
-                    <input type="email" required value={form.email} onChange={update('email')} placeholder="name@domain.com" className={inputCls} />
+                    <input type="email" required value={form.email} onChange={update('email')} className={inputCls} />
                   </div>
                 </div>
 
@@ -153,7 +153,7 @@ function ApplyModal({ job, onClose }) {
                   <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Phone Number *</label>
                   <div className="relative">
                     <Phone size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
-                    <input type="tel" required value={form.phone} onChange={update('phone')} placeholder="+91 98765 43210" className={inputCls} />
+                    <input type="tel" required value={form.phone} onChange={update('phone')} className={inputCls} />
                   </div>
                 </div>
               </div>
@@ -177,7 +177,7 @@ function ApplyModal({ job, onClose }) {
                   <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">LinkedIn Profile</label>
                   <div className="relative">
                     <LinkIcon size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
-                    <input type="url" value={form.linkedin} onChange={update('linkedin')} placeholder="https://linkedin.com/in/..." className={inputCls} />
+                    <input type="url" value={form.linkedin} onChange={update('linkedin')} className={inputCls} />
                   </div>
                 </div>
               </div>
@@ -186,7 +186,7 @@ function ApplyModal({ job, onClose }) {
                 <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Cover Letter / Note</label>
                 <div className="relative">
                   <FileText size={16} className="absolute left-3.5 top-3 text-slate-400" />
-                  <textarea rows="3" value={form.cover_letter} onChange={update('cover_letter')} placeholder="Tell us why you are a great fit for this role..." className={`${inputCls} pl-10 resize-none`} />
+                  <textarea rows="3" value={form.cover_letter} onChange={update('cover_letter')} className={`${inputCls} pl-10 resize-none`} />
                 </div>
               </div>
 

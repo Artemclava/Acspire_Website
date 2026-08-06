@@ -99,14 +99,15 @@ export default function AdminLayout() {
 
         {/* Footer actions */}
         <div className="p-4 border-t border-[#F1F5F9] flex flex-col gap-2">
-          <Link
-            to="/"
+          <a
+            href="https://acspire.netlify.app"
             target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-xs font-bold text-[#64748B] hover:text-[#0F172A] hover:bg-slate-100 transition-colors"
           >
             <ExternalLink size={15} className="text-slate-400" />
             <span>View Public Website</span>
-          </Link>
+          </a>
           <button
             onClick={handleLogout}
             className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-xs font-bold text-red-600 hover:text-red-700 hover:bg-red-50 transition-colors w-full text-left"

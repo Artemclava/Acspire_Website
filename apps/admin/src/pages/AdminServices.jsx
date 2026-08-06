@@ -248,7 +248,6 @@ export default function AdminServices() {
                 <input
                   type="text"
                   required
-                  placeholder="e.g. Social Media Marketing"
                   value={form.title}
                   onChange={(e) => setForm((p) => ({ ...p, title: e.target.value }))}
                   className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm outline-none focus:border-[#D4AF37] focus:bg-white transition"
@@ -260,7 +259,6 @@ export default function AdminServices() {
                 <textarea
                   rows={3}
                   required
-                  placeholder="Brief summary of this service..."
                   value={form.description}
                   onChange={(e) => setForm((p) => ({ ...p, description: e.target.value }))}
                   className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm outline-none focus:border-[#D4AF37] focus:bg-white resize-none transition"
@@ -300,7 +298,6 @@ export default function AdminServices() {
                   <input
                     ref={featureInputRef}
                     type="text"
-                    placeholder="e.g. React, SEO, Google Ads, AI Tools…"
                     value={newFeature}
                     onChange={(e) => setNewFeature(e.target.value)}
                     onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addFeature() } }}
@@ -349,7 +346,6 @@ export default function AdminServices() {
                   </label>
                   <input
                     type="text"
-                    placeholder="Or paste image URL"
                     value={form.image_url}
                     onChange={(e) => setForm((p) => ({ ...p, image_url: e.target.value }))}
                     className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-xs outline-none focus:border-[#D4AF37]"

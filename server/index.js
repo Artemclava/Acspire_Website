@@ -30,11 +30,27 @@ app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }))
 app.disable('x-powered-by')
 
 // ── 3. CORS configuration from ALLOWED_ORIGINS ────────────────────────────────
+const defaultOrigins = [
+  'https://acspire.netlify.app',
+  'https://acspireadmin.netlify.app',
+  'https://acspire.in',
+  'https://www.acspire.in',
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'http://localhost:5175',
+  'http://localhost:5176',
+  'http://localhost:5177',
+  'http://localhost:3000',
+]
+
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(',').map((o) => o.trim())
-  : ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:5175',
-     'http://localhost:5176', 'http://localhost:5177', 'http://localhost:3000',
-     'https://acspire.in', 'https://www.acspire.in']
+  : defaultOrigins
+
+// Always allow netlify deployment domains
+defaultOrigins.forEach((o) => {
+  if (!allowedOrigins.includes(o)) allowedOrigins.push(o)
+})
 
 app.use(
   cors({
@@ -42,7 +58,7 @@ app.use(
       if (!origin || allowedOrigins.includes(origin)) {
         return callback(null, true)
       }
-      return callback(null, true) // Local development fallback
+      return callback(null, true) // Development fallback
     },
     credentials: true,
   })

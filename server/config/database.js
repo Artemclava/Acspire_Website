@@ -607,6 +607,65 @@ export async function initDatabase() {
       );
     `)
 
+    // ── Seed Default Data if Tables are Empty ──────────────────────────────────
+    const seedTableIfEmpty = async (tableName, items, insertSql, mapValues) => {
+      const { rows } = await pool.query(`SELECT COUNT(*) FROM ${tableName}`)
+      if (parseInt(rows[0].count, 10) === 0 && items.length > 0) {
+        console.log(`🌱 Seeding initial data into ${tableName}...`)
+        for (const item of items) {
+          await pool.query(insertSql, mapValues(item))
+        }
+      }
+    }
+
+    await seedTableIfEmpty(
+      'contacts',
+      memDb.contacts,
+      `INSERT INTO contacts (type, name, first_name, last_name, email, phone, company, course, service, qualification, budget, message, is_read)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`,
+      (c) => [c.type, c.name, c.first_name, c.last_name, c.email, c.phone, c.company, c.course, c.service, c.qualification, c.budget, c.message, c.is_read || 0]
+    )
+
+    await seedTableIfEmpty(
+      'jobs',
+      memDb.jobs,
+      `INSERT INTO jobs (title, dept, location, type, level, description, is_active)
+       VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+      (j) => [j.title, j.dept, j.location, j.type, j.level, j.description, j.is_active ?? 1]
+    )
+
+    await seedTableIfEmpty(
+      'job_applications',
+      memDb.job_applications,
+      `INSERT INTO job_applications (job_title, name, email, phone, experience, linkedin, cover_letter, status, is_read)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+      (a) => [a.job_title, a.name, a.email, a.phone, a.experience, a.linkedin, a.cover_letter, a.status || 'pending', a.is_read || 0]
+    )
+
+    await seedTableIfEmpty(
+      'services',
+      memDb.services,
+      `INSERT INTO services (title, description, features, image_url, icon_name, sort_order)
+       VALUES ($1, $2, $3, $4, $5, $6)`,
+      (s) => [s.title, s.description, s.features, s.image_url, s.icon_name, s.sort_order || 0]
+    )
+
+    await seedTableIfEmpty(
+      'blogs',
+      memDb.blogs,
+      `INSERT INTO blogs (title, category, excerpt, content, author_name, author_img, image_url, read_time, is_published)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+      (b) => [b.title, b.category, b.excerpt, b.content, b.author_name, b.author_img, b.image_url, b.read_time, b.is_published ?? 1]
+    )
+
+    await seedTableIfEmpty(
+      'courses',
+      memDb.courses,
+      `INSERT INTO courses (title, track, track_subtitle, description, tag, image_url, sort_order)
+       VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+      (c) => [c.title, c.track, c.track_subtitle, c.description, c.tag, c.image_url, c.sort_order || 0]
+    )
+
     console.log('✅ Neon PostgreSQL Database Schema & Seed Data Ready!')
   } catch (err) {
     console.error('❌ Neon DB Initialization Error:', err.message)

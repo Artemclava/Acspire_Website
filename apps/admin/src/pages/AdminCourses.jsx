@@ -261,7 +261,6 @@ export default function AdminCourses() {
                 <input
                   type="text"
                   required
-                  placeholder="e.g. Advanced Digital Marketing Masterclass"
                   value={form.title}
                   onChange={(e) => setForm((p) => ({ ...p, title: e.target.value }))}
                   className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm outline-none focus:border-[#D4AF37] focus:bg-white transition"
@@ -313,7 +312,6 @@ export default function AdminCourses() {
                   <input
                     type="text"
                     required
-                    placeholder="e.g. Data Science & Analytics"
                     value={customTrack}
                     onChange={(e) => setCustomTrack(e.target.value)}
                     className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm outline-none focus:border-[#D4AF37] focus:bg-white transition"
@@ -326,7 +324,6 @@ export default function AdminCourses() {
                   <label className="text-xs font-bold text-slate-700 uppercase block mb-1">Custom Badge Text</label>
                   <input
                     type="text"
-                    placeholder="e.g. Special Offer"
                     value={form.tag}
                     onChange={(e) => setForm((p) => ({ ...p, tag: e.target.value }))}
                     className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm outline-none focus:border-[#D4AF37] focus:bg-white transition"
@@ -339,7 +336,6 @@ export default function AdminCourses() {
                 <textarea
                   rows={4}
                   required
-                  placeholder="Detailed description of what students will learn..."
                   value={form.description}
                   onChange={(e) => setForm((p) => ({ ...p, description: e.target.value }))}
                   className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm outline-none focus:border-[#D4AF37] focus:bg-white resize-none transition"
@@ -379,7 +375,6 @@ export default function AdminCourses() {
                   </label>
                   <input
                     type="text"
-                    placeholder="Or paste image URL"
                     value={form.image_url}
                     onChange={(e) => setForm((p) => ({ ...p, image_url: e.target.value }))}
                     className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-xs outline-none focus:border-[#D4AF37]"

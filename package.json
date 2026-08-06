@@ -4,13 +4,12 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-  "dev": "vite --host 0.0.0.0",
-  "build": "vite build",
-  "preview": "vite preview",
-  "server": "node server/index.js",
-  "start": "node server/index.js",
-  "dev:all": "concurrently \"npm run dev\" \"npm run server\""
-},
+    "dev": "npm run dev --prefix apps/website",
+    "dev:admin": "npm run dev --prefix apps/admin",
+    "dev:all": "concurrently \"npm run dev\" \"npm run dev:admin\" \"npm run server\"",
+    "server": "node server/index.js",
+    "start": "node server/index.js"
+  },
   "dependencies": {
     "@fontsource/plus-jakarta-sans": "^5.3.0",
     "@fontsource/sora": "^5.3.0",

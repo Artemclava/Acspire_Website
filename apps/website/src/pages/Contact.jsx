@@ -164,19 +164,19 @@ function StudentForm({ courses = [] }) {
 
       <div>
         <label className="block text-xs sm:text-[13.5px] font-bold text-[#0F172A] mb-1.5">Full Name <span className="text-red-500">*</span></label>
-        <input type="text" placeholder="e.g. Ranjith Kumar" value={f.name} onChange={(e) => set('name', e.target.value)} onBlur={() => blur('name')} className={inp(touched.name && errors.name)} />
+        <input type="text" value={f.name} onChange={(e) => set('name', e.target.value)} onBlur={() => blur('name')} className={inp(touched.name && errors.name)} />
         {touched.name && <FieldError msg={errors.name} />}
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
         <div>
           <label className="block text-xs sm:text-[13.5px] font-bold text-[#0F172A] mb-1.5">Email Address <span className="text-red-500">*</span></label>
-          <input type="email" placeholder="ranjith@gmail.com" value={f.email} onChange={(e) => set('email', e.target.value)} onBlur={() => blur('email')} className={inp(touched.email && errors.email)} />
+          <input type="email" value={f.email} onChange={(e) => set('email', e.target.value)} onBlur={() => blur('email')} className={inp(touched.email && errors.email)} />
           {touched.email && <FieldError msg={errors.email} />}
         </div>
         <div>
           <label className="block text-xs sm:text-[13.5px] font-bold text-[#0F172A] mb-1.5">Phone Number <span className="text-red-500">*</span></label>
-          <input type="tel" placeholder="+91 98765 43210" value={f.phone} onChange={(e) => set('phone', e.target.value)} onBlur={() => blur('phone')} className={inp(touched.phone && errors.phone)} />
+          <input type="tel" value={f.phone} onChange={(e) => set('phone', e.target.value)} onBlur={() => blur('phone')} className={inp(touched.phone && errors.phone)} />
           {touched.phone && <FieldError msg={errors.phone} />}
         </div>
       </div>
@@ -204,7 +204,7 @@ function StudentForm({ courses = [] }) {
 
       <div>
         <label className="block text-xs sm:text-[13.5px] font-bold text-[#0F172A] mb-1.5">Any Questions?</label>
-        <textarea rows={3} placeholder="Any specific questions about course, fees, schedule..." value={f.message} onChange={(e) => set('message', e.target.value)} onBlur={() => blur('message')} className={`${inp(touched.message && errors.message)} resize-none`} />
+        <textarea rows={3} value={f.message} onChange={(e) => set('message', e.target.value)} onBlur={() => blur('message')} className={`${inp(touched.message && errors.message)} resize-none`} />
         {touched.message && <FieldError msg={errors.message} />}
       </div>
 
@@ -264,31 +264,31 @@ function BusinessForm({ services = [] }) {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
         <div>
           <label className="block text-xs sm:text-[13.5px] font-bold text-[#0F172A] mb-1.5">First Name <span className="text-red-500">*</span></label>
-          <input type="text" placeholder="Arjun" value={f.firstName} onChange={(e) => set('firstName', e.target.value)} onBlur={() => blur('firstName')} className={inp(touched.firstName && errors.firstName)} />
+          <input type="text" value={f.firstName} onChange={(e) => set('firstName', e.target.value)} onBlur={() => blur('firstName')} className={inp(touched.firstName && errors.firstName)} />
           {touched.firstName && <FieldError msg={errors.firstName} />}
         </div>
         <div>
           <label className="block text-xs sm:text-[13.5px] font-bold text-[#0F172A] mb-1.5">Last Name <span className="text-red-500">*</span></label>
-          <input type="text" placeholder="Sharma" value={f.lastName} onChange={(e) => set('lastName', e.target.value)} onBlur={() => blur('lastName')} className={inp(touched.lastName && errors.lastName)} />
+          <input type="text" value={f.lastName} onChange={(e) => set('lastName', e.target.value)} onBlur={() => blur('lastName')} className={inp(touched.lastName && errors.lastName)} />
           {touched.lastName && <FieldError msg={errors.lastName} />}
         </div>
       </div>
 
       <div>
         <label className="block text-xs sm:text-[13.5px] font-bold text-[#0F172A] mb-1.5">Work Email <span className="text-red-500">*</span></label>
-        <input type="email" placeholder="arjun@company.com" value={f.email} onChange={(e) => set('email', e.target.value)} onBlur={() => blur('email')} className={inp(touched.email && errors.email)} />
+        <input type="email" value={f.email} onChange={(e) => set('email', e.target.value)} onBlur={() => blur('email')} className={inp(touched.email && errors.email)} />
         {touched.email && <FieldError msg={errors.email} />}
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
         <div>
           <label className="block text-xs sm:text-[13.5px] font-bold text-[#0F172A] mb-1.5">Phone</label>
-          <input type="tel" placeholder="+91 98765 43210" value={f.phone} onChange={(e) => set('phone', e.target.value)} onBlur={() => blur('phone')} className={inp(touched.phone && errors.phone)} />
+          <input type="tel" value={f.phone} onChange={(e) => set('phone', e.target.value)} onBlur={() => blur('phone')} className={inp(touched.phone && errors.phone)} />
           {touched.phone && <FieldError msg={errors.phone} />}
         </div>
         <div>
           <label className="block text-xs sm:text-[13.5px] font-bold text-[#0F172A] mb-1.5">Company Name</label>
-          <input type="text" placeholder="Your Company Pvt. Ltd." value={f.company} onChange={(e) => set('company', e.target.value)} className={inp(false)} />
+          <input type="text" value={f.company} onChange={(e) => set('company', e.target.value)} className={inp(false)} />
         </div>
       </div>
 
@@ -306,7 +306,7 @@ function BusinessForm({ services = [] }) {
 
       <div>
         <label className="block text-xs sm:text-[13.5px] font-bold text-[#0F172A] mb-1.5">Project Details <span className="text-red-500">*</span></label>
-        <textarea rows={4} placeholder="Tell us about your project, goals, and specific requirements... (min. 20 characters)" value={f.message} onChange={(e) => set('message', e.target.value)} onBlur={() => blur('message')} className={`${inp(touched.message && errors.message)} resize-none`} />
+        <textarea rows={4} value={f.message} onChange={(e) => set('message', e.target.value)} onBlur={() => blur('message')} className={`${inp(touched.message && errors.message)} resize-none`} />
         <div className="flex justify-between mt-1">
           {touched.message ? <FieldError msg={errors.message} /> : <span />}
           <span className={`text-[11px] font-medium ml-auto ${f.message.trim().length >= 20 ? 'text-[#22c55e]' : 'text-[#94A3B8]'}`}>{f.message.trim().length}/20</span>
@@ -458,18 +458,24 @@ export default function Contact() {
                 <h3 style={{ fontFamily: 'Manrope, sans-serif', fontWeight: 800 }} className="text-base sm:text-lg text-[#0F172A] mb-5">Contact Details</h3>
                 <div className="flex flex-col gap-5">
                   {[
-                    { icon: Phone, label: 'Phone', value: '+91 6383283731', sub: 'Mon - Fri 10am - 6pm' },
-                    { icon: Mail, label: 'Email', value: 'acspire26@gmail.com', sub: 'Quick Response' },
-                    { icon: MapPin, label: 'Headquarters', value: 'Plot No A1, Mangalakshmi nagar', sub: 'madhanathapuram, Porur, Chennai 600125' },
-                    { icon: Clock, label: 'Working Hours', value: 'Monday to Friday', sub: '10:00 AM – 6:00 PM (IST)' },
-                  ].map(({ icon: Icon, label, value, sub }) => (
+                    { icon: Phone, label: 'Phone', value: '+91 63832 83731', href: 'tel:+916383283731', sub: 'Mon - Fri 10am - 6pm' },
+                    { icon: Mail, label: 'Email', value: 'acspire26@gmail.com', href: 'mailto:acspire26@gmail.com', sub: 'Quick Response' },
+                    { icon: MapPin, label: 'Headquarters', value: 'Plot No A1, Mangalakshmi nagar', href: 'https://maps.app.goo.gl/kEYM3fVzCyFVXHECA', sub: 'madhanathapuram, Porur, Chennai 600125' },
+                    { icon: Clock, label: 'Working Hours', value: 'Monday to Friday', href: null, sub: '10:00 AM – 6:00 PM (IST)' },
+                  ].map(({ icon: Icon, label, value, href, sub }) => (
                     <div key={label} className="flex gap-3.5">
                       <div className="w-9 h-9 sm:w-11 sm:h-11 bg-[#FBF5DC] rounded-xl flex items-center justify-center shrink-0 border border-[#D4AF37]/30">
                         <Icon size={16} className="text-[#D4AF37]" />
                       </div>
                       <div>
                         <p className="text-[11px] text-[#94A3B8] font-bold uppercase tracking-wider mb-0.5">{label}</p>
-                        <p style={{ fontFamily: 'Manrope, sans-serif', fontWeight: 700 }} className="text-xs sm:text-[15px] text-[#0F172A]">{value}</p>
+                        {href ? (
+                          <a href={href} target={href.startsWith('http') ? '_blank' : '_self'} rel={href.startsWith('http') ? 'noopener noreferrer' : ''} style={{ fontFamily: 'Manrope, sans-serif', fontWeight: 700 }} className="text-xs sm:text-[15px] text-[#0F172A] hover:text-[#D4AF37] transition-colors block">
+                            {value}
+                          </a>
+                        ) : (
+                          <p style={{ fontFamily: 'Manrope, sans-serif', fontWeight: 700 }} className="text-xs sm:text-[15px] text-[#0F172A]">{value}</p>
+                        )}
                         <p className="text-[11px] sm:text-[12.5px] text-[#64748B]">{sub}</p>
                       </div>
                     </div>

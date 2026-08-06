@@ -238,7 +238,6 @@ export default function AdminJobs() {
                 <input
                   type="text"
                   required
-                  placeholder="e.g. Senior React Developer"
                   value={form.title}
                   onChange={(e) => setForm((p) => ({ ...p, title: e.target.value }))}
                   className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm outline-none focus:border-[#D4AF37] focus:bg-white transition"
@@ -250,7 +249,6 @@ export default function AdminJobs() {
                   <label className="text-xs font-bold text-slate-700 uppercase block mb-1">Department</label>
                   <input
                     type="text"
-                    placeholder="Engineering, Marketing..."
                     value={form.dept}
                     onChange={(e) => setForm((p) => ({ ...p, dept: e.target.value }))}
                     className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm outline-none focus:border-[#D4AF37] focus:bg-white transition"
@@ -260,7 +258,6 @@ export default function AdminJobs() {
                   <label className="text-xs font-bold text-slate-700 uppercase block mb-1">Location</label>
                   <input
                     type="text"
-                    placeholder="Chennai / Remote"
                     value={form.location}
                     onChange={(e) => setForm((p) => ({ ...p, location: e.target.value }))}
                     className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm outline-none focus:border-[#D4AF37] focus:bg-white transition"
@@ -286,7 +283,6 @@ export default function AdminJobs() {
                   <label className="text-xs font-bold text-slate-700 uppercase block mb-1">Experience Level</label>
                   <input
                     type="text"
-                    placeholder="Senior, Mid-Level..."
                     value={form.level}
                     onChange={(e) => setForm((p) => ({ ...p, level: e.target.value }))}
                     className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm outline-none focus:border-[#D4AF37] focus:bg-white transition"
@@ -298,7 +294,6 @@ export default function AdminJobs() {
                 <label className="text-xs font-bold text-slate-700 uppercase block mb-1">Description</label>
                 <textarea
                   rows={4}
-                  placeholder="Responsibilities, requirements, and benefits..."
                   value={form.description}
                   onChange={(e) => setForm((p) => ({ ...p, description: e.target.value }))}
                   className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm outline-none focus:border-[#D4AF37] focus:bg-white resize-none transition"

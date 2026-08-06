@@ -8,7 +8,7 @@ export function requireAuth(req, res, next) {
   if (!token) return res.status(401).json({ error: 'Malformed token' })
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET)
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'acspire_default_secret_jwt_2026')
     req.admin = decoded
     next()
   } catch {

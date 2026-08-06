@@ -23,7 +23,19 @@ export default function AdminDashboard() {
       fetch(`${API}/api/services`).then((r) => r.json()),
     ])
       .then(([statsRes, contactsRes, jobsRes, blogsRes, coursesRes, servicesRes]) => {
-        setStats(statsRes)
+        if (statsRes?.error || contactsRes?.error || jobsRes?.error || blogsRes?.error) {
+          if (
+            statsRes?.error?.includes('token') ||
+            contactsRes?.error?.includes('token') ||
+            jobsRes?.error?.includes('token') ||
+            blogsRes?.error?.includes('token')
+          ) {
+            localStorage.removeItem('acspire_admin_token')
+            window.location.href = '/admin/login'
+            return
+          }
+        }
+        setStats(statsRes && !statsRes.error ? statsRes : { total: 0, unread: 0, student: 0, business: 0 })
         setRecentContacts(Array.isArray(contactsRes) ? contactsRes.slice(0, 5) : [])
         setCounts({
           jobs: Array.isArray(jobsRes) ? jobsRes.length : 0,
@@ -32,7 +44,7 @@ export default function AdminDashboard() {
           services: Array.isArray(servicesRes) ? servicesRes.length : 0,
         })
       })
-      .catch((err) => console.error(err))
+      .catch((err) => console.error('Dashboard fetch error:', err))
       .finally(() => setLoading(false))
   }, [])
 

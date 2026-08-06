@@ -155,7 +155,6 @@ export default function AdminLogin() {
                 <Mail size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
                 <input
                   type="email"
-                  placeholder="you@acspire.com"
                   value={form.email}
                   onChange={(e) => setForm((p) => ({ ...p, email: e.target.value }))}
                   className="w-full pl-10 pr-4 py-3 text-sm text-slate-900 placeholder-slate-400 rounded-xl outline-none transition-all"
@@ -187,7 +186,6 @@ export default function AdminLogin() {
                 <Lock size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
                 <input
                   type={showPwd ? 'text' : 'password'}
-                  placeholder="Enter your password"
                   value={form.password}
                   onChange={(e) => setForm((p) => ({ ...p, password: e.target.value }))}
                   className="w-full pl-10 pr-11 py-3 text-sm text-slate-900 placeholder-slate-400 rounded-xl outline-none transition-all"

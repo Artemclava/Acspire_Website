@@ -475,7 +475,6 @@ export default function AdminBlogs() {
                     <input
                       type="text"
                       required
-                      placeholder="e.g. Is Digital Marketing Worth it in 2026?"
                       value={form.title}
                       onChange={(e) => setForm((p) => ({ ...p, title: e.target.value }))}
                       className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm outline-none focus:border-[#D4AF37] focus:bg-white transition"
@@ -502,7 +501,6 @@ export default function AdminBlogs() {
                       <label className="text-xs font-bold text-slate-700 uppercase block mb-1">Author Name</label>
                       <input
                         type="text"
-                        placeholder="e.g. ACSPIRE Team"
                         value={form.author_name}
                         onChange={(e) => setForm((p) => ({ ...p, author_name: e.target.value }))}
                         className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm outline-none focus:border-[#D4AF37] focus:bg-white transition"
@@ -518,7 +516,6 @@ export default function AdminBlogs() {
                     <textarea
                       rows={2}
                       required
-                      placeholder="1–2 sentence summary shown on blog list cards..."
                       value={form.excerpt}
                       onChange={(e) => setForm((p) => ({ ...p, excerpt: e.target.value }))}
                       className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-sm outline-none focus:border-[#D4AF37] focus:bg-white resize-none transition"
@@ -671,7 +668,6 @@ export default function AdminBlogs() {
                           ref={textareaRef}
                           rows={10}
                           required
-                          placeholder="Write your article body here — or click '📄 Upload HTML File' above to load from a file…"
                           value={form.content}
                           onChange={(e) => setForm((p) => ({ ...p, content: e.target.value }))}
                           className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-b-xl text-slate-900 text-xs outline-none focus:border-[#D4AF37] focus:bg-white resize-y font-sans leading-relaxed transition"
@@ -713,7 +709,6 @@ export default function AdminBlogs() {
                       </label>
                       <input
                         type="text"
-                        placeholder="Or paste image URL"
                         value={form.image_url}
                         onChange={(e) => setForm((p) => ({ ...p, image_url: e.target.value }))}
                         className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 text-xs outline-none focus:border-[#D4AF37]"
