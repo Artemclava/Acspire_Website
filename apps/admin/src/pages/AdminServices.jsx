@@ -93,8 +93,13 @@ export default function AdminServices() {
     const formData = new FormData()
     formData.append('image', file)
     setUploading(true)
+    const token = localStorage.getItem('acspire_admin_token')
     try {
-      const res = await fetch(`${API}/api/upload`, { method: 'POST', body: formData })
+      const res = await fetch(`${API}/api/upload`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData,
+      })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Upload failed')
       setForm((p) => ({ ...p, image_url: data.url }))

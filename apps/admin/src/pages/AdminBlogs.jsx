@@ -199,8 +199,13 @@ export default function AdminBlogs() {
     const formData = new FormData()
     formData.append('image', file)
     setUploading(true)
+    const token = localStorage.getItem('acspire_admin_token')
     try {
-      const res = await fetch(`${API}/api/upload`, { method: 'POST', body: formData })
+      const res = await fetch(`${API}/api/upload`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData,
+      })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Upload failed')
       setForm((p) => ({ ...p, image_url: data.url }))
@@ -217,8 +222,13 @@ export default function AdminBlogs() {
     const formData = new FormData()
     formData.append('image', file)
     setInlineUploading(true)
+    const token = localStorage.getItem('acspire_admin_token')
     try {
-      const res = await fetch(`${API}/api/upload`, { method: 'POST', body: formData })
+      const res = await fetch(`${API}/api/upload`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData,
+      })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Upload failed')
       insertSnippet(`<img src="${data.url}" alt="Article photo" class="my-6 rounded-2xl w-full object-cover shadow-lg border border-[#E2E8F0]" />\n`)

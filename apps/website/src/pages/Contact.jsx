@@ -104,7 +104,7 @@ async function sendSubmission(payload) {
       body: JSON.stringify(payload),
     })
     if (res.ok) savedToDb = true
-  } catch {}
+  } catch { }
 
   if (SHEETS_URL) {
     try {
@@ -113,7 +113,7 @@ async function sendSubmission(payload) {
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify(payload),
       })
-    } catch {}
+    } catch { }
   }
 }
 
@@ -368,7 +368,7 @@ export default function Contact() {
           setCourseList([...data.map(c => c.title), 'Other'])
         }
       })
-      .catch(() => {})
+      .catch(() => { })
     fetch(`${API}/api/services`)
       .then(r => r.json())
       .then(data => {
@@ -376,7 +376,7 @@ export default function Contact() {
           setServiceList([...data.map(s => s.title), 'Other'])
         }
       })
-      .catch(() => {})
+      .catch(() => { })
   }, [])
 
   return (
@@ -414,11 +414,10 @@ export default function Contact() {
                     <button
                       type="button"
                       onClick={() => setActiveTab('student')}
-                      className={`flex items-center justify-center gap-2 py-2.5 sm:py-3.5 rounded-xl text-xs sm:text-[14px] font-bold transition-all duration-300 ${
-                        activeTab === 'student'
+                      className={`flex items-center justify-center gap-2 py-2.5 sm:py-3.5 rounded-xl text-xs sm:text-[14px] font-bold transition-all duration-300 ${activeTab === 'student'
                           ? 'bg-white text-[#D4AF37] shadow-md border border-[#D4AF37]/30'
                           : 'text-[#64748B] hover:text-[#0F172A]'
-                      }`}
+                        }`}
                     >
                       <GraduationCap size={16} />
                       I'm a Student
@@ -426,11 +425,10 @@ export default function Contact() {
                     <button
                       type="button"
                       onClick={() => setActiveTab('business')}
-                      className={`flex items-center justify-center gap-2 py-2.5 sm:py-3.5 rounded-xl text-xs sm:text-[14px] font-bold transition-all duration-300 ${
-                        activeTab === 'business'
+                      className={`flex items-center justify-center gap-2 py-2.5 sm:py-3.5 rounded-xl text-xs sm:text-[14px] font-bold transition-all duration-300 ${activeTab === 'business'
                           ? 'bg-white text-[#D4AF37] shadow-md border border-[#D4AF37]/30'
                           : 'text-[#64748B] hover:text-[#0F172A]'
-                      }`}
+                        }`}
                     >
                       <Briefcase size={16} />
                       I'm a Business
