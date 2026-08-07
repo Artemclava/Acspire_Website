@@ -9,13 +9,7 @@ import { useInView } from '../hooks/useInView'
 
 import { API_BASE_URL as API_URL } from '../api/config'
 
-const initialOpenings = [
-  { title: 'Senior Full-Stack Developer', dept: 'Engineering', location: 'Chennai', type: 'Full-Time', level: 'Senior', desc: 'Build and scale our client web applications using React, Node.js, and PostgreSQL. Lead technical architecture decisions and mentor junior developers.' },
-  { title: 'Digital Marketing Manager', dept: 'Marketing', location: 'Chennai', type: 'Full-Time', level: 'Mid-Senior', desc: 'Drive multi-channel digital marketing campaigns for 10+ client accounts. Expert in SEO, PPC, and marketing analytics.' },
-  { title: 'AI & Automation Specialist', dept: 'Engineering', location: 'Chennai', type: 'Full-Time', level: 'Senior', desc: 'Develop cutting-edge AI agents, RAG workflows, and enterprise automation solutions for our clients.' },
-  { title: 'Business Analyst', dept: 'Engineering', location: 'Chennai', type: 'Full-Time', level: 'Senior', desc: 'Drive new client acquisition in the Middle East and South Asia markets. Strong network and enterprise sales track record preferred.' },
-  { title: 'SEO Specialist', dept: 'Engineering', location: 'Chennai', type: 'Full-Time', level: 'Senior', desc: 'Lead SEO strategy and execution for multiple client accounts. Deep expertise in technical SEO, content strategy, and analytics.' },
-]
+
 
 function Animate({ children, delay = 0, className = '', dir = 'up' }) {
   const { ref, inView } = useInView()
@@ -206,30 +200,31 @@ function ApplyModal({ job, onClose }) {
 }
 
 export default function Careers() {
-  const [openings, setOpenings] = useState(initialOpenings)
+  const [openings, setOpenings] = useState([])
+  const [loading, setLoading] = useState(true)
   const [applyJob, setApplyJob] = useState(null)
 
   useEffect(() => {
+    setLoading(true)
     fetch(`${API_URL}/api/jobs`)
       .then((res) => res.json())
       .then((data) => {
-        if (Array.isArray(data) && data.length > 0) {
+        if (Array.isArray(data)) {
           const active = data.filter((j) => j.is_active === 1 || j.is_active === true)
-          if (active.length > 0) {
-            setOpenings(
-              active.map((j) => ({
-                title: j.title,
-                dept: j.dept || j.department || 'Engineering',
-                location: j.location || 'Chennai',
-                type: j.type || 'Full-Time',
-                level: j.level || 'Experienced',
-                desc: j.description,
-              }))
-            )
-          }
+          setOpenings(
+            active.map((j) => ({
+              title: j.title,
+              dept: j.dept || j.department || 'Engineering',
+              location: j.location || 'Chennai',
+              type: j.type || 'Full-Time',
+              level: j.level || 'Experienced',
+              desc: j.description || j.desc || '',
+            }))
+          )
         }
       })
-      .catch((err) => console.log('Using initial openings fallback:', err))
+      .catch((err) => console.error('Error fetching jobs:', err))
+      .finally(() => setLoading(false))
   }, [])
 
   return (
@@ -346,32 +341,54 @@ export default function Careers() {
             <p className="section-subtext max-w-xl mx-auto">Don't see the perfect role? Send us your details anyway.</p>
           </Animate>
 
-          <div className="flex flex-col gap-4 sm:gap-5">
-            {openings.map((job, i) => (
-              <Animate key={job.title + i} delay={i * 50} className="card-gold bg-white rounded-[16px] sm:rounded-[24px] border border-[#E2E8F0] p-5 sm:p-8 shadow-sm card-lift">
-                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 sm:gap-6">
-                  <div className="flex-1">
-                    <div className="flex flex-wrap gap-2 mb-2.5">
-                      <span className="bg-[#EFF6FF] text-[#1E3A8A] text-[10.5px] sm:text-[11.5px] font-bold px-2.5 py-0.5 rounded-full">{job.dept}</span>
-                      <span className="bg-[#FBF5DC] text-[#D4AF37] text-[10.5px] sm:text-[11.5px] font-bold px-2.5 py-0.5 rounded-full">{job.level}</span>
+          {loading ? (
+            <div className="flex items-center justify-center py-16 text-[#D4AF37]">
+              <Loader2 size={32} className="animate-spin" />
+            </div>
+          ) : openings.length === 0 ? (
+            <div className="bg-slate-50 border border-slate-200 rounded-[20px] p-8 text-center max-w-xl mx-auto">
+              <Briefcase size={36} className="text-[#D4AF37] mx-auto mb-3" />
+              <h3 style={{ fontFamily: 'Manrope, sans-serif' }} className="text-xl font-bold text-slate-800 mb-2">
+                No Open Positions Currently
+              </h3>
+              <p className="text-slate-600 text-sm mb-4 leading-relaxed">
+                We don't have active openings right now, but we are always looking for exceptional talent. Submit a general application below or check back soon!
+              </p>
+              <button
+                onClick={() => setApplyJob({ title: 'General Application' })}
+                className="btn-primary btn-shine text-xs sm:text-sm inline-flex items-center gap-2 py-2.5 px-6"
+              >
+                Submit General Resume <ArrowRight size={14} />
+              </button>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-4 sm:gap-5">
+              {openings.map((job, i) => (
+                <Animate key={job.title + i} delay={i * 50} className="card-gold bg-white rounded-[16px] sm:rounded-[24px] border border-[#E2E8F0] p-5 sm:p-8 shadow-sm card-lift">
+                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 sm:gap-6">
+                    <div className="flex-1">
+                      <div className="flex flex-wrap gap-2 mb-2.5">
+                        <span className="bg-[#EFF6FF] text-[#1E3A8A] text-[10.5px] sm:text-[11.5px] font-bold px-2.5 py-0.5 rounded-full">{job.dept}</span>
+                        <span className="bg-[#FBF5DC] text-[#D4AF37] text-[10.5px] sm:text-[11.5px] font-bold px-2.5 py-0.5 rounded-full">{job.level}</span>
+                      </div>
+                      <h3 style={{ fontFamily: 'Manrope, sans-serif', fontWeight: 800 }} className="text-lg sm:text-xl text-[#0F172A] mb-2">{job.title}</h3>
+                      <p className="text-xs sm:text-[14.5px] text-[#475569] leading-relaxed mb-3 sm:mb-4">{job.desc}</p>
+                      <div className="flex flex-wrap gap-4 text-xs sm:text-[13px] text-[#64748B] font-medium">
+                        <span className="flex items-center gap-1.5"><MapPin size={14} className="text-[#D4AF37]" /> {job.location}</span>
+                        <span className="flex items-center gap-1.5"><Clock size={14} className="text-[#D4AF37]" /> {job.type}</span>
+                      </div>
                     </div>
-                    <h3 style={{ fontFamily: 'Manrope, sans-serif', fontWeight: 800 }} className="text-lg sm:text-xl text-[#0F172A] mb-2">{job.title}</h3>
-                    <p className="text-xs sm:text-[14.5px] text-[#475569] leading-relaxed mb-3 sm:mb-4">{job.desc}</p>
-                    <div className="flex flex-wrap gap-4 text-xs sm:text-[13px] text-[#64748B] font-medium">
-                      <span className="flex items-center gap-1.5"><MapPin size={14} className="text-[#D4AF37]" /> {job.location}</span>
-                      <span className="flex items-center gap-1.5"><Clock size={14} className="text-[#D4AF37]" /> {job.type}</span>
-                    </div>
+                    <button
+                      onClick={() => setApplyJob(job)}
+                      className="btn-primary btn-shine text-xs sm:text-sm whitespace-nowrap w-full sm:w-auto justify-center py-2.5 px-6"
+                    >
+                      Apply Now <ArrowRight size={14} />
+                    </button>
                   </div>
-                  <button
-                    onClick={() => setApplyJob(job)}
-                    className="btn-primary btn-shine text-xs sm:text-sm whitespace-nowrap w-full sm:w-auto justify-center py-2.5 px-6"
-                  >
-                    Apply Now <ArrowRight size={14} />
-                  </button>
-                </div>
-              </Animate>
-            ))}
-          </div>
+                </Animate>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
