@@ -33,6 +33,7 @@ app.disable('x-powered-by')
 const defaultOrigins = [
   'https://acspire.netlify.app',
   'https://acspireadmin.netlify.app',
+  'https://acspirewebsite-production.up.railway.app',
   'https://acspire.in',
   'https://www.acspire.in',
   'http://localhost:5173',
