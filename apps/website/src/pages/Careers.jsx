@@ -210,20 +210,23 @@ export default function Careers() {
   const [applyJob, setApplyJob] = useState(null)
 
   useEffect(() => {
-    fetch(`${API_URL}/api/job-openings`)
+    fetch(`${API_URL}/api/jobs`)
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data) && data.length > 0) {
-          setOpenings(
-            data.map((j) => ({
-              title: j.title,
-              dept: j.department || 'Engineering',
-              location: j.location || 'Chennai',
-              type: j.type || 'Full-Time',
-              level: j.level || 'Experienced',
-              desc: j.description,
-            }))
-          )
+          const active = data.filter((j) => j.is_active === 1 || j.is_active === true)
+          if (active.length > 0) {
+            setOpenings(
+              active.map((j) => ({
+                title: j.title,
+                dept: j.dept || j.department || 'Engineering',
+                location: j.location || 'Chennai',
+                type: j.type || 'Full-Time',
+                level: j.level || 'Experienced',
+                desc: j.description,
+              }))
+            )
+          }
         }
       })
       .catch((err) => console.log('Using initial openings fallback:', err))
