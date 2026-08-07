@@ -2,8 +2,11 @@
  * ACSPIRE Centralized API Configuration
  */
 
-// Fallback to empty string for relative URLs in production or default port 3001 in dev
-export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+export const API_BASE_URL =
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.DEV
+    ? 'http://localhost:3001'
+    : 'https://acspireserver-production.up.railway.app')
 
 export const SHEETS_URL = import.meta.env.VITE_SHEETS_URL || ''
 

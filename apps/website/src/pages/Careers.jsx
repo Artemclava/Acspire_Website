@@ -351,15 +351,9 @@ export default function Careers() {
               <h3 style={{ fontFamily: 'Manrope, sans-serif' }} className="text-xl font-bold text-slate-800 mb-2">
                 No Open Positions Currently
               </h3>
-              <p className="text-slate-600 text-sm mb-4 leading-relaxed">
-                We don't have active openings right now, but we are always looking for exceptional talent. Submit a general application below or check back soon!
+              <p className="text-slate-600 text-sm leading-relaxed">
+                We don't have active job openings right now. Please check back later!
               </p>
-              <button
-                onClick={() => setApplyJob({ title: 'General Application' })}
-                className="btn-primary btn-shine text-xs sm:text-sm inline-flex items-center gap-2 py-2.5 px-6"
-              >
-                Submit General Resume <ArrowRight size={14} />
-              </button>
             </div>
           ) : (
             <div className="flex flex-col gap-4 sm:gap-5">
